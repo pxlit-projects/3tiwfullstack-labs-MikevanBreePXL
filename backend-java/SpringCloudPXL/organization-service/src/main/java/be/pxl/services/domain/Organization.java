@@ -22,9 +22,9 @@ public class Organization {
     private String name;
     private String address;
 
-    @ElementCollection
-    private List<Employee> employeeList;
+    @OneToMany
+    private List<EmployeeEntity> employeeList;
 
-    @ElementCollection
+    @OneToMany
     private List<Department> departmentList;
 }

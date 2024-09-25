@@ -1,7 +1,7 @@
 package be.pxl.services.domain.dto;
 
 
-import be.pxl.services.domain.Employee;
+import be.pxl.services.domain.EmployeeEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,5 +17,5 @@ public class DepartmentResponse {
     private Long organizationId;
     private String name;
     private String position;
-    private List<Employee> employeeList;
+    private List<EmployeeEntity> employeeList;
 }

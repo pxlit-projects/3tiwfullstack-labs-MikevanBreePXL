@@ -1,6 +1,6 @@
 services:
   employeeservice_db:
-    image: mysql:5.5
+    image: mysql:latest
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: hahaFunny
@@ -67,4 +67,4 @@ services:
       PMA_HOSTS: employeeservice_db,departmentservice_db,organizationservice_db,notificationservice_db
       MYSQL_ROOT_PASSWORD: hahaFunny
     ports:
-      - "8083:80"
+      - "8081:80"

@@ -20,8 +20,8 @@ public class DepartmentService implements IDepartmentService {
 
     @Override
     public DepartmentResponse getDepartmentById(Long id) {
-        return departmentRepository.findById(id)
-                .map(department -> mapToDepartmentResponse(department)).orElseThrow();
+        Department entity = departmentRepository.getReferenceById(id);
+        return mapToDepartmentResponse(entity);
     }
 
     private DepartmentResponse mapToDepartmentResponse(Department department) {
@@ -43,7 +43,7 @@ public class DepartmentService implements IDepartmentService {
 
     @Override
     public void updateDepartment(Long id, DepartmentRequest request) {
-        Department entity = departmentRepository.findById(id).orElseThrow();
+        Department entity = departmentRepository.getReferenceById(id);
         entity.setName(request.getName());
         entity.setOrganizationId(request.getOrganizationId());
         entity.setEmployeeList(request.getEmployeeList());

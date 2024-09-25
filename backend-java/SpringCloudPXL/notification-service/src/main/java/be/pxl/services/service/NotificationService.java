@@ -19,6 +19,12 @@ public class NotificationService implements INotificationService {
         return notificationRepository.findAll().stream().map(notification -> mapToNotificationResponse(notification)).toList();
     }
 
+    @Override
+    public NotificationResponse getNotificationById(Long id) {
+        Notification entity = notificationRepository.getReferenceById(id);
+        return mapToNotificationResponse(entity);
+    }
+
     private NotificationResponse mapToNotificationResponse(Notification entity) {
         return NotificationResponse.builder()
                 .from(entity.getFrom())
@@ -37,5 +43,22 @@ public class NotificationService implements INotificationService {
                 .message(notification.getMessage())
                 .build();
         notificationRepository.save(entity);
+    }
+
+    @Override
+    public void updateNotification(Long id, NotificationRequest notification) {
+        Notification entity = notificationRepository.getReferenceById(id);
+        entity.setFrom(notification.getFrom());
+        entity.setTo(notification.getTo());
+        entity.setSubject(notification.getSubject());
+        entity.setMessage(notification.getMessage());
+
+        notificationRepository.save(entity);
+    }
+
+    @Override
+    public void deleteNotification(Long id) {
+        notificationRepository.deleteById(id);
+        notificationRepository.flush();
     }
 }

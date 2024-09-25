@@ -1,6 +1,6 @@
 package be.pxl.services.service;
 
-import be.pxl.services.domain.Employee;
+import be.pxl.services.domain.EmployeeEntity;
 import be.pxl.services.domain.dto.EmployeeRequest;
 import be.pxl.services.domain.dto.EmployeeResponse;
 import be.pxl.services.repository.EmployeeRepository;
@@ -15,14 +15,20 @@ public class EmployeeService implements IEmployeeService {
     private final EmployeeRepository employeeRepository;
     @Override
     public List<EmployeeResponse> getAllEmployees() {
-        List<Employee> employees = employeeRepository.findAll();
+        List<EmployeeEntity> employees = employeeRepository.findAll();
 
         return employees.stream()
                 .map(employee -> mapToEmployeeResponse(employee))
                 .toList();
     }
 
-    private EmployeeResponse mapToEmployeeResponse(Employee employee) {
+    @Override
+    public EmployeeResponse getEmployee(long id) {
+        EmployeeEntity entity = employeeRepository.getReferenceById(id);
+        return mapToEmployeeResponse(entity);
+    }
+
+    private EmployeeResponse mapToEmployeeResponse(EmployeeEntity employee) {
         return EmployeeResponse.builder()
                 .organizationId(employee.getOrganizationId())
                 .departmentId(employee.getDepartmentId())
@@ -34,7 +40,7 @@ public class EmployeeService implements IEmployeeService {
 
     @Override
     public void addEmployee(EmployeeRequest request) {
-        Employee employee = Employee.builder()
+        EmployeeEntity employee = EmployeeEntity.builder()
                 .organizationId(request.getOrganizationId())
                 .departmentId(request.getDepartmentId())
                 .name(request.getName())
@@ -46,7 +52,7 @@ public class EmployeeService implements IEmployeeService {
 
     @Override
     public void updateEmployee(long id, EmployeeRequest request) {
-        Employee employee = employeeRepository.findById(id).orElseThrow();
+        EmployeeEntity employee = employeeRepository.findById(id).orElseThrow();
 
         employee.setOrganizationId(request.getOrganizationId());
         employee.setDepartmentId(request.getDepartmentId());

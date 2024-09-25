@@ -7,5 +7,8 @@ import java.util.List;
 
 public interface INotificationService {
     List<NotificationResponse> getAllNotifications();
+    NotificationResponse getNotificationById(Long id);
     void addNotification(NotificationRequest notification);
+    void updateNotification(Long id, NotificationRequest notification);
+    void deleteNotification(Long id);
 }

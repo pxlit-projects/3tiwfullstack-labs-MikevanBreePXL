@@ -1,24 +1,25 @@
 package be.pxl.services.domain;
 
-import jakarta.persistence.ElementCollection;
-import jakarta.persistence.Embeddable;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
+@Entity
+@Table(name = "employee")
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Embeddable
-public class Department {
-    private Long organizationId;
-    private String name;
-    private String position;
+public class EmployeeEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
-    @ElementCollection
-    private List<Employee> employeeList;
+    private Long organizationId;
+    private Long departmentId;
+    private String name;
+    private int age;
+    private String position;
 }
