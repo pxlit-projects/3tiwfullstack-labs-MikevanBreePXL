@@ -1,4 +1,4 @@
-package service;
+package be.pxl.services.service;
 
 import be.pxl.services.domain.Organization;
 import be.pxl.services.domain.dto.OrganizationRequest;
@@ -23,6 +23,7 @@ public class OrganizationService implements IOrganizationService {
         return OrganizationResponse.builder()
                 .name(entity.getName())
                 .address(entity.getAddress())
+                .employeeList(entity.getEmployeeList())
                 .departmentList(entity.getDepartmentList())
                 .build();
     }
@@ -32,6 +33,7 @@ public class OrganizationService implements IOrganizationService {
         Organization organization = Organization.builder()
                 .name(request.getName())
                 .address(request.getAddress())
+                .employeeList(request.getEmployeeList())
                 .departmentList(request.getDepartmentList())
                 .build();
 

@@ -23,5 +23,8 @@ public class Organization {
     private String address;
 
     @ElementCollection
+    private List<Employee> employeeList;
+
+    @ElementCollection
     private List<Department> departmentList;
 }

@@ -5,7 +5,7 @@ import be.pxl.services.domain.dto.OrganizationResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import service.IOrganizationService;
+import be.pxl.services.service.IOrganizationService;
 
 import java.util.List;
 

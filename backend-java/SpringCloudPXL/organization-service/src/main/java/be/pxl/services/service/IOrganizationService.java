@@ -1,4 +1,4 @@
-package service;
+package be.pxl.services.service;
 
 import be.pxl.services.domain.dto.OrganizationRequest;
 import be.pxl.services.domain.dto.OrganizationResponse;
