@@ -29,4 +29,16 @@ public class EmployeeController {
     public void addNewEmployee(@RequestBody EmployeeRequest request) {
         employeeService.addEmployee(request);
     }
+
+    @PutMapping(path = "/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void updateEmployee(@PathVariable long id, @RequestBody EmployeeRequest request) {
+        employeeService.updateEmployee(id, request);
+    }
+
+    @DeleteMapping(path = "/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteEmployee(@PathVariable long id) {
+        employeeService.deleteEmployee(id);
+    }
 }

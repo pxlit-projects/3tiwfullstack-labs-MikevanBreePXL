@@ -43,4 +43,23 @@ public class EmployeeService implements IEmployeeService {
                 .build();
         employeeRepository.save(employee);
     }
+
+    @Override
+    public void updateEmployee(long id, EmployeeRequest request) {
+        Employee employee = employeeRepository.findById(id).orElseThrow();
+
+        employee.setOrganizationId(request.getOrganizationId());
+        employee.setDepartmentId(request.getDepartmentId());
+        employee.setName(request.getName());
+        employee.setAge(request.getAge());
+        employee.setPosition(request.getPosition());
+
+        employeeRepository.save(employee);
+    }
+
+    @Override
+    public void deleteEmployee(long id) {
+        Employee employee = employeeRepository.findById(id).orElseThrow();
+        employeeRepository.delete(employee);
+    }
 }
