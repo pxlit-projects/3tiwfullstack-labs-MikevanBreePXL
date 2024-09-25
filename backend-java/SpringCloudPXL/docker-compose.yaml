@@ -14,7 +14,7 @@ services:
 
 
   departmentservice_db:
-    image: mysql:5.5
+    image: mysql:latest
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: hahaFunny
@@ -28,7 +28,7 @@ services:
 
 
   organizationservice_db:
-    image: mysql:5.5
+    image: mysql:latest
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: hahaFunny
@@ -42,7 +42,7 @@ services:
 
 
   notificationservice_db:
-    image: mysql:5.5
+    image: mysql:latest
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: hahaFunny
