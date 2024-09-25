@@ -1,6 +1,6 @@
 services:
-  db:
-    image: mysql:latest
+  employeeservice_db:
+    image: mysql:5.5
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: hahaFunny
@@ -8,17 +8,63 @@ services:
       MYSQL_USER: user
       MYSQL_PASSWORD: password
     volumes:
-      - ./mysql_data:/var/lib/mysql
+      - ./mysql_data/employeeservice_db:/var/lib/mysql
     ports:
       - "3306:3306"
+
+
+  departmentservice_db:
+    image: mysql:5.5
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: hahaFunny
+      MYSQL_DATABASE: departmentservice_db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    volumes:
+      - ./mysql_data/departmentservice_db:/var/lib/mysql
+    ports:
+      - "3307:3306"
+
+
+  organizationservice_db:
+    image: mysql:5.5
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: hahaFunny
+      MYSQL_DATABASE: organizationservice_db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    volumes:
+      - ./mysql_data/organizationservice_db:/var/lib/mysql
+    ports:
+      - "3308:3306"
+
+
+  notificationservice_db:
+    image: mysql:5.5
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: hahaFunny
+      MYSQL_DATABASE: notificationservice_db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    volumes:
+      - ./mysql_data/notificationservice_db:/var/lib/mysql
+    ports:
+      - "3309:3306"
+
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:latest
     restart: always
     depends_on:
-      - db
+      - employeeservice_db
+      - departmentservice_db
+      - organizationservice_db
+      - notificationservice_db
     environment:
-      PMA_HOST: db
-      MYSQL_ROOT_PASSWORD: your_root_password
+      PMA_HOSTS: employeeservice_db,departmentservice_db,organizationservice_db,notificationservice_db
+      MYSQL_ROOT_PASSWORD: hahaFunny
     ports:
       - "8083:80"
