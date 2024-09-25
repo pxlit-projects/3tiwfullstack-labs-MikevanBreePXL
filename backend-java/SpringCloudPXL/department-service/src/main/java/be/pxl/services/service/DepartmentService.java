@@ -18,6 +18,12 @@ public class DepartmentService implements IDepartmentService {
         return departmentRepository.findAll().stream().map(department -> mapToDepartmentResponse(department)).toList();
     }
 
+    @Override
+    public DepartmentResponse getDepartmentById(Long id) {
+        return departmentRepository.findById(id)
+                .map(department -> mapToDepartmentResponse(department)).orElseThrow();
+    }
+
     private DepartmentResponse mapToDepartmentResponse(Department department) {
         return DepartmentResponse.builder()
                 .organizationId(department.getOrganizationId())
@@ -33,5 +39,22 @@ public class DepartmentService implements IDepartmentService {
                 .employeeList(request.getEmployeeList())
                 .build();
         departmentRepository.save(newDepartment);
+    }
+
+    @Override
+    public void updateDepartment(Long id, DepartmentRequest request) {
+        Department entity = departmentRepository.findById(id).orElseThrow();
+        entity.setName(request.getName());
+        entity.setOrganizationId(request.getOrganizationId());
+        entity.setEmployeeList(request.getEmployeeList());
+        entity.setPosition(request.getPosition());
+
+        departmentRepository.save(entity);
+    }
+
+    @Override
+    public void deleteDepartment(Long id) {
+        departmentRepository.deleteById(id);
+        departmentRepository.flush();
     }
 }

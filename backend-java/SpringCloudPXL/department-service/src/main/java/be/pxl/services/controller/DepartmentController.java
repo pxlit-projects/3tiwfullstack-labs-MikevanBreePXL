@@ -19,9 +19,27 @@ public class DepartmentController {
         return departmentService.getAllDepartments();
     }
 
+    @GetMapping(path = "/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public DepartmentResponse getDepartment(@RequestParam Long id) {
+        return departmentService.getDepartmentById(id);
+    }
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void createDepartment(@RequestBody final DepartmentRequest departmentRequest) {
         departmentService.addDepartment(departmentRequest);
+    }
+
+    @PutMapping(path = "/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void updateDepartment(@PathVariable final Long id, @RequestBody final DepartmentRequest departmentRequest) {
+        departmentService.updateDepartment(id, departmentRequest);
+    }
+
+    @DeleteMapping(path = "/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteDepartment(@PathVariable final Long id) {
+        departmentService.deleteDepartment(id);
     }
 }
