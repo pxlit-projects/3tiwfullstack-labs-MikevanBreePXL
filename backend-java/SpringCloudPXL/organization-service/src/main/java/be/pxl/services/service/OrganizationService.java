@@ -29,7 +29,7 @@ public class OrganizationService implements IOrganizationService {
     }
 
     @Override
-    public void addOrganization(OrganizationRequest request) {
+    public void addNewOrganization(OrganizationRequest request) {
         Organization organization = Organization.builder()
                 .name(request.getName())
                 .address(request.getAddress())

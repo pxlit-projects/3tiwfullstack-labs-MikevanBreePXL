@@ -24,6 +24,6 @@ public class OrganizationController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void addNewOrganization(@RequestBody OrganizationRequest organizationRequest) {
-        organizationService.addOrganization(organizationRequest);
+        organizationService.addNewOrganization(organizationRequest);
     }
 }

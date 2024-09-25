@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface IOrganizationService {
     List<OrganizationResponse> getAllOrganizations();
-    void addOrganization(OrganizationRequest request);
+    void addNewOrganization(OrganizationRequest organization);
 }
