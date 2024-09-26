@@ -28,7 +28,6 @@ public class DepartmentService implements IDepartmentService {
         return DepartmentResponse.builder()
                 .organizationId(department.getOrganizationId())
                 .name(department.getName())
-                .employeeList(department.getEmployeeList())
                 .build();
     }
 
@@ -36,7 +35,6 @@ public class DepartmentService implements IDepartmentService {
         Department newDepartment = Department.builder()
                 .organizationId(request.getOrganizationId())
                 .name(request.getName())
-                .employeeList(request.getEmployeeList())
                 .build();
         departmentRepository.save(newDepartment);
     }
@@ -46,7 +44,6 @@ public class DepartmentService implements IDepartmentService {
         Department entity = departmentRepository.getReferenceById(id);
         entity.setName(request.getName());
         entity.setOrganizationId(request.getOrganizationId());
-        entity.setEmployeeList(request.getEmployeeList());
         entity.setPosition(request.getPosition());
 
         departmentRepository.save(entity);

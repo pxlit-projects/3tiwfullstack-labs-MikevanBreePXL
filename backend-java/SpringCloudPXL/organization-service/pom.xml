@@ -18,17 +18,5 @@
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>be.pxl.services</groupId>
-            <artifactId>employee-service</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>be.pxl.services</groupId>
-            <artifactId>department-service</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
     </dependencies>
 </project>

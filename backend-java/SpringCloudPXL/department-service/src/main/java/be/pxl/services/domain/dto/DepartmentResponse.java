@@ -1,7 +1,7 @@
 package be.pxl.services.domain.dto;
 
 
-import be.pxl.services.domain.EmployeeEntity;
+import be.pxl.services.domain.EmployeeEmbeddable;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,5 +17,5 @@ public class DepartmentResponse {
     private Long organizationId;
     private String name;
     private String position;
-    private List<EmployeeEntity> employeeList;
+    private List<EmployeeEmbeddable> employeeList;
 }
