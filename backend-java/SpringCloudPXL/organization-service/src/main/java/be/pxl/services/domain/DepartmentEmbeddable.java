@@ -1,6 +1,8 @@
 package be.pxl.services.domain;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
+import jakarta.persistence.Embeddable;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -8,21 +10,17 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-@Entity
-@Table(name = "department")
+@Embeddable
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Department {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-
+public class DepartmentEmbeddable {
+    @Column(name = "organization_id")
     private Long organizationId;
     private String name;
     private String position;
 
-    @Transient
+    @ElementCollection
     private List<EmployeeEmbeddable> employees;
 }
