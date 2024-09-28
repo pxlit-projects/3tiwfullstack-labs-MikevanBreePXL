@@ -11,4 +11,6 @@ public interface IEmployeeService  {
     void addEmployee(EmployeeRequest request);
     void updateEmployee(long id, EmployeeRequest request);
     void deleteEmployee(long id);
+    List<EmployeeResponse> findByDepartmentId(Long departmentId);
+    List<EmployeeResponse> findByOrganizationId(Long organizationId);
 }

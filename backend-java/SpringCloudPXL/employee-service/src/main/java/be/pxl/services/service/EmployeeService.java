@@ -28,16 +28,6 @@ public class EmployeeService implements IEmployeeService {
         return mapToEmployeeResponse(entity);
     }
 
-    private EmployeeResponse mapToEmployeeResponse(EmployeeEntity employee) {
-        return EmployeeResponse.builder()
-                .organizationId(employee.getOrganizationId())
-                .departmentId(employee.getDepartmentId())
-                .name(employee.getName())
-                .age(employee.getAge())
-                .position(employee.getPosition())
-                .build();
-    }
-
     @Override
     public void addEmployee(EmployeeRequest request) {
         EmployeeEntity employee = EmployeeEntity.builder()
@@ -67,5 +57,32 @@ public class EmployeeService implements IEmployeeService {
     public void deleteEmployee(long id) {
         employeeRepository.deleteById(id);
         employeeRepository.flush();
+    }
+
+    @Override
+    public List<EmployeeResponse> findByDepartmentId(Long departmentId) {
+        return employeeRepository.findAll().stream()
+                .filter(employee -> employee.getDepartmentId().equals(departmentId))
+                .map(employee -> mapToEmployeeResponse(employee))
+                .toList();
+    }
+
+    @Override
+    public List<EmployeeResponse> findByOrganizationId(Long organizationId) {
+        return employeeRepository.findAll().stream()
+                .filter(employee -> employee.getOrganizationId().equals(organizationId))
+                .map(employee -> mapToEmployeeResponse(employee))
+                .toList();
+    }
+
+    // PRIVATE METHODS //
+    private EmployeeResponse mapToEmployeeResponse(EmployeeEntity employee) {
+        return EmployeeResponse.builder()
+                .organizationId(employee.getOrganizationId())
+                .departmentId(employee.getDepartmentId())
+                .name(employee.getName())
+                .age(employee.getAge())
+                .position(employee.getPosition())
+                .build();
     }
 }
