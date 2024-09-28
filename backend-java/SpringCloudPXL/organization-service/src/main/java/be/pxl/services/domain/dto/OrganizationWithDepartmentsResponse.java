@@ -13,7 +13,8 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class OrganizationResponse {
+public class OrganizationWithDepartmentsResponse {
     private String name;
     private String address;
+    private List<Department> departments;
 }

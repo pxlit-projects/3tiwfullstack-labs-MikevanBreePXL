@@ -13,7 +13,9 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class OrganizationResponse {
+public class OrganizationWithDepartmentsAndEmployeesResponse {
     private String name;
     private String address;
+    private List<Department> departments;
+    private List<EmployeeEntity> employees;
 }

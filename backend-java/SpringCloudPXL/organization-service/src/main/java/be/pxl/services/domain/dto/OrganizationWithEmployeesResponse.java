@@ -13,7 +13,8 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class OrganizationResponse {
+public class OrganizationWithEmployeesResponse {
     private String name;
     private String address;
+    private List<EmployeeEntity> employees;
 }

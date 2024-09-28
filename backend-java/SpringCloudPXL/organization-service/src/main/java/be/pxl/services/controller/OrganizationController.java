@@ -1,7 +1,6 @@
 package be.pxl.services.controller;
 
-import be.pxl.services.domain.dto.OrganizationRequest;
-import be.pxl.services.domain.dto.OrganizationResponse;
+import be.pxl.services.domain.dto.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -15,10 +14,28 @@ import java.util.List;
 public class OrganizationController {
     private final IOrganizationService organizationService;
 
-    @GetMapping
+    @GetMapping(path = "{id}")
     @ResponseStatus(HttpStatus.OK)
-    public List<OrganizationResponse> getAllOrganizations() {
-        return organizationService.getAllOrganizations();
+    public OrganizationResponse getAllOrganizations(@PathVariable Long id) {
+        return organizationService.getOrganizationById(id);
+    }
+
+    @GetMapping(path = "/{id}/with-departments")
+    @ResponseStatus(HttpStatus.OK)
+    public OrganizationWithDepartmentsResponse findByIdWithDepartments(@PathVariable Long id) {
+        return organizationService.getOrganizationWithDepartmentsById(id);
+    }
+
+    @GetMapping(path = "/{id}/with-departments-and-employees")
+    @ResponseStatus(HttpStatus.OK)
+    public OrganizationWithDepartmentsAndEmployeesResponse findByIdWithDepartmentsAndEmployees(@PathVariable Long id) {
+        return organizationService.getOrganizationWithDepartmentsAndEmployeesById(id);
+    }
+
+    @GetMapping(path = "/{id}/with-employees")
+    @ResponseStatus(HttpStatus.OK)
+    public OrganizationWithEmployeesResponse OrganizationWithEmployeesResponse(@PathVariable Long id) {
+        return organizationService.getOrganizationWithEmployeesById(id);
     }
 
     @PostMapping
