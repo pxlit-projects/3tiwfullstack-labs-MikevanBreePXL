@@ -3,6 +3,7 @@ package be.pxl.services.service;
 import be.pxl.services.domain.Department;
 import be.pxl.services.domain.dto.DepartmentRequest;
 import be.pxl.services.domain.dto.DepartmentResponse;
+import be.pxl.services.domain.dto.DepartmentWithoutEmployeesResponse;
 import be.pxl.services.repository.DepartmentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,14 +23,6 @@ public class DepartmentService implements IDepartmentService {
     public DepartmentResponse getDepartmentById(Long id) {
         Department entity = departmentRepository.getReferenceById(id);
         return mapToDepartmentResponse(entity);
-    }
-
-    private DepartmentResponse mapToDepartmentResponse(Department department) {
-        return DepartmentResponse.builder()
-                .organizationId(department.getOrganizationId())
-                .name(department.getName())
-                .employeeList(department.getEmployeeList())
-                .build();
     }
 
     public void addDepartment(DepartmentRequest request) {
@@ -56,5 +49,30 @@ public class DepartmentService implements IDepartmentService {
     public void deleteDepartment(Long id) {
         departmentRepository.deleteById(id);
         departmentRepository.flush();
+    }
+
+    @Override
+    public List<DepartmentWithoutEmployeesResponse> getDepartmentByOrganizationId(Long organizationId) {
+        return departmentRepository.findAll().stream()
+                .filter(department -> department.getOrganizationId().equals(organizationId))
+                .map(department -> new DepartmentWithoutEmployeesResponse(department.getOrganizationId(), department.getName(), department.getPosition()))
+                .toList();
+    }
+
+    @Override
+    public List<DepartmentResponse> getDepartmentWithEmployeesByOrganizationId(Long organizationId) {
+        return departmentRepository.findAll().stream()
+                .filter(department -> department.getOrganizationId().equals(organizationId))
+                .map(department -> mapToDepartmentResponse(department))
+                .toList();
+    }
+
+    // PRIVATE METHODS //
+    private DepartmentResponse mapToDepartmentResponse(Department department) {
+        return DepartmentResponse.builder()
+                .organizationId(department.getOrganizationId())
+                .name(department.getName())
+                .employeeList(department.getEmployeeList())
+                .build();
     }
 }

@@ -2,6 +2,8 @@ package be.pxl.services.controller;
 
 import be.pxl.services.domain.dto.DepartmentRequest;
 import be.pxl.services.domain.dto.DepartmentResponse;
+import be.pxl.services.domain.dto.DepartmentWithoutEmployeesResponse;
+import be.pxl.services.domain.dto.EmployeeResponse;
 import be.pxl.services.service.IDepartmentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -31,6 +33,18 @@ public class DepartmentController {
     @ResponseStatus(HttpStatus.CREATED)
     public void createDepartment(@RequestBody final DepartmentRequest departmentRequest) {
         departmentService.addDepartment(departmentRequest);
+    }
+
+    @GetMapping(path = "/organization/{organizationId}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<DepartmentWithoutEmployeesResponse> findByOrganization(@PathVariable Long organizationId) {
+        return departmentService.getDepartmentByOrganizationId(organizationId);
+    }
+
+    @GetMapping(path = "/organization/{organizationId}/with-employees")
+    @ResponseStatus(HttpStatus.OK)
+    public List<DepartmentResponse> findByOrganizationWithEmployees(@PathVariable Long organizationId) {
+        return departmentService.getDepartmentWithEmployeesByOrganizationId(organizationId);
     }
 
     @PutMapping(path = "/{id}")
