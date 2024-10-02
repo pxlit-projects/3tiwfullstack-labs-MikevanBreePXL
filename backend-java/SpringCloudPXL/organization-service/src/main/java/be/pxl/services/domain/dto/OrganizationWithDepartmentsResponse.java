@@ -1,7 +1,6 @@
 package be.pxl.services.domain.dto;
 
-import be.pxl.services.domain.Department;
-import be.pxl.services.domain.EmployeeEntity;
+import be.pxl.services.domain.DepartmentEmbeddable;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,5 +15,5 @@ import java.util.List;
 public class OrganizationWithDepartmentsResponse {
     private String name;
     private String address;
-    private List<Department> departments;
+    private List<DepartmentEmbeddable> departments;
 }

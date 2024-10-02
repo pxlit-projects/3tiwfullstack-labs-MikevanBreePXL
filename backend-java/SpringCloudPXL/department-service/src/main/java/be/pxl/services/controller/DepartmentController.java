@@ -3,7 +3,6 @@ package be.pxl.services.controller;
 import be.pxl.services.domain.dto.DepartmentRequest;
 import be.pxl.services.domain.dto.DepartmentResponse;
 import be.pxl.services.domain.dto.DepartmentWithoutEmployeesResponse;
-import be.pxl.services.domain.dto.EmployeeResponse;
 import be.pxl.services.service.IDepartmentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
