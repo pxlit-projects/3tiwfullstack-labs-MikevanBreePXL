@@ -1,7 +1,10 @@
 package be.pxl.services.service;
 
+import be.pxl.services.client.NotificationClient;
 import be.pxl.services.domain.Employee;
-import be.pxl.services.domain.dto.EmployeeRequest;
+import be.pxl.services.domain.NotificationRequest;
+import be.pxl.services.domain.dto.EmployeeCreateRequest;
+import be.pxl.services.domain.dto.EmployeeDetailRequest;
 import be.pxl.services.domain.dto.EmployeeResponse;
 import be.pxl.services.repository.EmployeeRepository;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +16,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class EmployeeService implements IEmployeeService {
     private final EmployeeRepository employeeRepository;
+    private final NotificationClient notificationClient;
+
     @Override
     public List<EmployeeResponse> getAllEmployees() {
         List<Employee> employees = employeeRepository.findAll();
@@ -29,19 +34,23 @@ public class EmployeeService implements IEmployeeService {
     }
 
     @Override
-    public void addEmployee(EmployeeRequest request) {
+    public void addEmployee(EmployeeCreateRequest request) {
         Employee employee = Employee.builder()
-                .organizationId(request.getOrganizationId())
-                .departmentId(request.getDepartmentId())
                 .name(request.getName())
                 .age(request.getAge())
                 .position(request.getPosition())
                 .build();
         employeeRepository.save(employee);
+
+        NotificationRequest notificationRequest = NotificationRequest.builder()
+                .message("Employee created")
+                .sender("Verzender")
+                .build();
+        notificationClient.sendNotification(notificationRequest);
     }
 
     @Override
-    public void updateEmployee(long id, EmployeeRequest request) {
+    public void updateEmployee(long id, EmployeeDetailRequest request) {
         Employee employee = employeeRepository.findById(id).orElseThrow();
 
         employee.setOrganizationId(request.getOrganizationId());

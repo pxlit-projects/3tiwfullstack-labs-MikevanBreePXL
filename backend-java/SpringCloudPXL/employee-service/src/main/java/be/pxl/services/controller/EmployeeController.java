@@ -1,11 +1,11 @@
 package be.pxl.services.controller;
 
-import be.pxl.services.domain.dto.EmployeeRequest;
+import be.pxl.services.domain.dto.EmployeeCreateRequest;
+import be.pxl.services.domain.dto.EmployeeDetailRequest;
 import be.pxl.services.domain.dto.EmployeeResponse;
 import be.pxl.services.service.IEmployeeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -37,7 +37,7 @@ public class EmployeeController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void addNewEmployee(@RequestBody EmployeeRequest request) {
+    public void addNewEmployee(@RequestBody EmployeeCreateRequest request) {
         employeeService.addEmployee(request);
     }
 
@@ -61,7 +61,7 @@ public class EmployeeController {
 
     @PutMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void updateEmployee(@PathVariable long id, @RequestBody EmployeeRequest request) {
+    public void updateEmployee(@PathVariable long id, @RequestBody EmployeeDetailRequest request) {
         employeeService.updateEmployee(id, request);
     }
 
