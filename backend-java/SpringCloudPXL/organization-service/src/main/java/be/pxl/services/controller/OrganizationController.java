@@ -16,7 +16,7 @@ public class OrganizationController {
 
     @GetMapping(path = "{id}")
     @ResponseStatus(HttpStatus.OK)
-    public OrganizationResponse getAllOrganizations(@PathVariable Long id) {
+    public OrganizationResponse getOrganization(@PathVariable Long id) {
         return organizationService.getOrganizationById(id);
     }
 
