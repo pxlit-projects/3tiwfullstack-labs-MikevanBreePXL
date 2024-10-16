@@ -87,6 +87,7 @@ public class EmployeeService implements IEmployeeService {
     // PRIVATE METHODS //
     private EmployeeResponse mapToEmployeeResponse(Employee employee) {
         return EmployeeResponse.builder()
+                .id(employee.getId())
                 .organizationId(employee.getOrganizationId())
                 .departmentId(employee.getDepartmentId())
                 .name(employee.getName())

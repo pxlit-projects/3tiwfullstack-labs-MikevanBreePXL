@@ -21,3 +21,5 @@ public class EmployeeEmbeddable {
     private int age;
     private String position;
 }
+
+

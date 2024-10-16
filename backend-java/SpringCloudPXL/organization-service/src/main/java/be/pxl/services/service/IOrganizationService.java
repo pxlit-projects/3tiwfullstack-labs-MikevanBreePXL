@@ -5,6 +5,7 @@ import be.pxl.services.domain.dto.*;
 import java.util.List;
 
 public interface IOrganizationService {
+    List<OrganizationResponse> getAllOrganizations();
     OrganizationResponse getOrganizationById(Long id);
     OrganizationWithDepartmentsResponse getOrganizationWithDepartmentsById(Long id);
     OrganizationWithDepartmentsAndEmployeesResponse getOrganizationWithDepartmentsAndEmployeesById(Long id);

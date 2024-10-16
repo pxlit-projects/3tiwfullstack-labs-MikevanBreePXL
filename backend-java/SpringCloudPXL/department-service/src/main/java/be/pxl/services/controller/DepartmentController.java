@@ -24,14 +24,8 @@ public class DepartmentController {
 
     @GetMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public DepartmentResponse getDepartment(@RequestParam Long id) {
+    public DepartmentResponse getDepartment(@PathVariable Long id) {
         return departmentService.getDepartmentById(id);
-    }
-
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public void createDepartment(@RequestBody final DepartmentRequest departmentRequest) {
-        departmentService.addDepartment(departmentRequest);
     }
 
     @GetMapping(path = "/organization/{organizationId}")
@@ -44,6 +38,12 @@ public class DepartmentController {
     @ResponseStatus(HttpStatus.OK)
     public List<DepartmentResponse> findByOrganizationWithEmployees(@PathVariable Long organizationId) {
         return departmentService.getDepartmentWithEmployeesByOrganizationId(organizationId);
+    }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public void createDepartment(@RequestBody final DepartmentRequest departmentRequest) {
+        departmentService.addDepartment(departmentRequest);
     }
 
     @PutMapping(path = "/{id}")

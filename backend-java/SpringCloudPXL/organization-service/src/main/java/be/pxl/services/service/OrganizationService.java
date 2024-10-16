@@ -1,5 +1,7 @@
 package be.pxl.services.service;
 
+import be.pxl.services.client.DepartmentClient;
+import be.pxl.services.client.EmployeeClient;
 import be.pxl.services.domain.Organization;
 import be.pxl.services.domain.dto.*;
 import be.pxl.services.repository.OrganizationRepository;
@@ -12,29 +14,52 @@ import java.util.List;
 @RequiredArgsConstructor
 public class OrganizationService implements IOrganizationService {
     private final OrganizationRepository organizationRepository;
+    private final EmployeeClient employeeClient;
+    private final DepartmentClient departmentClient;
+
+    @Override
+    public List<OrganizationResponse> getAllOrganizations() {
+        List<Organization> organizations = organizationRepository.findAll();
+        return organizations.stream()
+                .map(this::mapToOrganizationResponse)
+                .toList();
+    }
 
     @Override
     public OrganizationResponse getOrganizationById(Long id) {
-        return organizationRepository.findById(id)
-                .map(organization -> mapToOrganizationResponse(organization)).orElseThrow();
+        Organization organization = organizationRepository.getReferenceById(id);
+        return mapToOrganizationResponse(organization);
     }
 
     @Override
     public OrganizationWithDepartmentsResponse getOrganizationWithDepartmentsById(Long id) {
         Organization queryOrganization = organizationRepository.findById(id).orElseThrow();
-        return new OrganizationWithDepartmentsResponse(queryOrganization.getName(), queryOrganization.getAddress(), queryOrganization.getDepartmentList());
+        return OrganizationWithDepartmentsResponse.builder()
+                .name(queryOrganization.getName())
+                .address(queryOrganization.getAddress())
+                .departments(departmentClient.findByOrganizationWithEmployees(id))
+                .build();
     }
 
     @Override
     public OrganizationWithDepartmentsAndEmployeesResponse getOrganizationWithDepartmentsAndEmployeesById(Long id) {
         Organization queryOrganization = organizationRepository.findById(id).orElseThrow();
-        return new OrganizationWithDepartmentsAndEmployeesResponse(queryOrganization.getName(), queryOrganization.getAddress(), queryOrganization.getDepartmentList(), queryOrganization.getEmployeeList());
+        return OrganizationWithDepartmentsAndEmployeesResponse.builder()
+                .name(queryOrganization.getName())
+                .address(queryOrganization.getAddress())
+                .departments(departmentClient.findByOrganizationWithEmployees(id))
+                .employees(employeeClient.findByOrganizationId(id))
+                .build();
     }
 
     @Override
     public OrganizationWithEmployeesResponse getOrganizationWithEmployeesById(Long id) {
         Organization queryOrganization = organizationRepository.findById(id).orElseThrow();
-        return new OrganizationWithEmployeesResponse(queryOrganization.getName(), queryOrganization.getAddress(), queryOrganization.getEmployeeList());
+        return OrganizationWithEmployeesResponse.builder()
+                .name(queryOrganization.getName())
+                .address(queryOrganization.getAddress())
+                .employees(queryOrganization.getEmployeeList())
+                .build();
     }
 
     @Override
@@ -42,11 +67,9 @@ public class OrganizationService implements IOrganizationService {
         Organization organization = Organization.builder()
                 .name(request.getName())
                 .address(request.getAddress())
-                .employeeList(request.getEmployeeList())
-                .departmentList(request.getDepartmentList())
                 .build();
 
-        organizationRepository.save(organization);
+        organizationRepository.saveAndFlush(organization);
     }
 
     @Override
@@ -54,10 +77,8 @@ public class OrganizationService implements IOrganizationService {
         Organization entity = organizationRepository.getReferenceById(id);
         entity.setName(organization.getName());
         entity.setAddress(organization.getAddress());
-        entity.setEmployeeList(organization.getEmployeeList());
-        entity.setDepartmentList(organization.getDepartmentList());
         
-        organizationRepository.save(entity);
+        organizationRepository.saveAndFlush(entity);
     }
 
     @Override
@@ -69,6 +90,7 @@ public class OrganizationService implements IOrganizationService {
     // PRIVATE METHODS //
     private OrganizationResponse mapToOrganizationResponse(Organization entity) {
         return OrganizationResponse.builder()
+                .id(entity.getId())
                 .name(entity.getName())
                 .address(entity.getAddress())
                 .build();
