@@ -24,21 +24,12 @@ public class EmployeeController {
     *     return new ResponseEntity(employeeService.getAllEmployees(), HttpStatus.OK);
     *   }
     *
-     */
-
-    /*
-     * Method 2 for doing HTTP statuses: @ResponseStatus(HttpStatus.)
-     */
+    *   Method 2 for doing HTTP statuses: @ResponseStatus(HttpStatus.< >)
+    */
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<EmployeeResponse> getAllEmployees() {
         return employeeService.getAllEmployees();
-    }
-
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public void addNewEmployee(@RequestBody EmployeeCreateRequest request) {
-        employeeService.addEmployee(request);
     }
 
     @GetMapping(path = "{id}")
@@ -57,6 +48,12 @@ public class EmployeeController {
     @ResponseStatus(HttpStatus.OK)
     public List<EmployeeResponse> findByOrganizationId(@PathVariable Long organizationId) {
         return employeeService.findByOrganizationId(organizationId);
+    }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public void addNewEmployee(@RequestBody EmployeeCreateRequest request) {
+        employeeService.addEmployee(request);
     }
 
     @PutMapping(path = "/{id}")

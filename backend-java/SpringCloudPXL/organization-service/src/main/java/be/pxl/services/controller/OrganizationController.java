@@ -14,9 +14,15 @@ import java.util.List;
 public class OrganizationController {
     private final IOrganizationService organizationService;
 
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    public List<OrganizationResponse> getAllOrganizations() {
+        return organizationService.getAllOrganizations();
+    }
+
     @GetMapping(path = "{id}")
     @ResponseStatus(HttpStatus.OK)
-    public OrganizationResponse getOrganization(@PathVariable Long id) {
+    public OrganizationResponse findById(@PathVariable Long id) {
         return organizationService.getOrganizationById(id);
     }
 
@@ -34,7 +40,7 @@ public class OrganizationController {
 
     @GetMapping(path = "/{id}/with-employees")
     @ResponseStatus(HttpStatus.OK)
-    public OrganizationWithEmployeesResponse OrganizationWithEmployeesResponse(@PathVariable Long id) {
+    public OrganizationWithEmployeesResponse findByIdWithEmployeesResponse(@PathVariable Long id) {
         return organizationService.getOrganizationWithEmployeesById(id);
     }
 
@@ -42,5 +48,17 @@ public class OrganizationController {
     @ResponseStatus(HttpStatus.CREATED)
     public void addNewOrganization(@RequestBody OrganizationRequest organizationRequest) {
         organizationService.addNewOrganization(organizationRequest);
+    }
+
+    @PutMapping(path = "/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void updateOrganization(@PathVariable Long id, @RequestBody OrganizationRequest organizationRequest) {
+        organizationService.updateOrganization(id, organizationRequest);
+    }
+
+    @DeleteMapping(path = "/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteOrganization(@PathVariable Long id) {
+        organizationService.deleteOrganization(id);
     }
 }
