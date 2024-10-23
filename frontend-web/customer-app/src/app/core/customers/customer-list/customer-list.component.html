@@ -4,6 +4,5 @@
         @for(item of filteredData; track item.name){
             <app-customer-item [customer]="item"></app-customer-item>
         }
-        <app-add-customer (addCustomer)="processAdd($event)"></app-add-customer>
   </div>
 </div>
