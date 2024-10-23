@@ -20,17 +20,35 @@ export class CustomerListComponent implements OnInit {
   filteredData!: Customer[];
 
   ngOnInit(): void {
-    this.customers = this.customerService.getCustomers();
-    this.customers[1].isLoyal = true;
-    this.filteredData = this.customers;
+    this.customerService.getCustomers().subscribe({
+      next: customers => {
+        this.filteredData = customers
+      }
+    });
   }
 
   handleFilter(filter: Filter){
-    this.filteredData = this.customerService.filterCustomers(filter);
+    this.customerService.filterCustomers(filter).subscribe({
+      next: customers => this.filteredData = customers
+    });
   }
 
   processAdd(customer: Customer){
-    this.customerService.addCustomer(customer);
-    this.filteredData = this.customerService.getCustomers();
+    this.customerService.addCustomer(customer).subscribe({
+      next: () => {
+        this.customerService.getCustomers().subscribe({
+          next: customers => this.filteredData = customers
+        });
+      }
+    });
+  }
+
+  // TODO!
+  fetchData(): void {
+    this.customerService.getCustomers().subscribe({
+      next: customers => {
+        this.filteredData = customers;
+      }
+    });
   }
 }
