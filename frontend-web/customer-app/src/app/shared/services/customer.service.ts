@@ -25,6 +25,14 @@ export class CustomerService {
     return this.http.post<Customer>(this.api, customer);
   }
 
+  updateCustomer(customer: Customer): Observable<Customer>{
+    return this.http.put<Customer>('/api/customers/' + customer.id, customer);
+  }
+
+  getCustomer(id: number): Observable<Customer> {
+    return this.http.get<Customer>('api/customers/' + id);
+  }
+
   filterCustomers(filter: Filter): Observable<Customer[]> {
     return this.http.get<Customer[]>(this.api).pipe(
         map((customers: Customer[]) => customers.filter(customer => this.isCustomerMatchingFilter(customer, filter)))
